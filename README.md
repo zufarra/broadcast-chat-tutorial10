@@ -54,3 +54,25 @@ Program ini menggunakan fitur konkuren dari Rust dengan bantuan Tokio untuk mena
 Dengan implementasi ini, sistem chat dapat menangani banyak koneksi secara bersamaan tanpa memblokir proses utama, yang merupakan contoh baik tentang bagaimana asynchronous programming di Rust dapat digunakan untuk membangun aplikasi jaringan yang efisien.
 
 ---
+
+### 2.2 Modifying port.
+
+Gambar 1:
+
+![/modifying-port](./images/modify-port-client.jpg)
+
+Gambar 2:
+
+![/modifying-port](./images/modify-port-server.jpg)
+
+Untuk memodifikasi port menjadi 8080 dan memastikan program masih berjalan dengan baik, perlu dilakukan perubahan baik di sisi server maupun client. Hal ini karena komunikasi WebSocket melibatkan dua pihak, yaitu client yang membuat koneksi dan server yang menerima koneksi. Dalam kasus ini, port awal pada client.rs adalah 2000 dan diubah ke 8080. Agar koneksi berhasil, kedua sisi harus menggunakan port yang sama.
+
+Perubahan dilakukan di server.rs pada baris yang membangun URI untuk koneksi WebSocket, yaitu: terlampir pada gambar 2.
+
+Di sisi client (server.rs), port sudah menggunakan 8080 seperti terlihat pada gambar 1.
+
+Keduanya menggunakan protokol yang sama, yaitu WebSocket (ws://) yang didefinisikan secara eksplisit di URI yang digunakan pada ClientBuilder di client.rs. Jadi, ya, protokol WebSocket digunakan secara konsisten antara kedua file.
+
+Kesimpulannya, untuk memastikan koneksi berhasil, kita perlu menyamakan port pada client.rs dengan port yang digunakan server.rs, yaitu 8080. Setelah perubahan ini dilakukan dan kode dijalankan kembali, maka koneksi WebSocket seharusnya dapat berhasil terhubung tanpa masalah.
+
+---
