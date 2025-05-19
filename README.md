@@ -76,3 +76,37 @@ Keduanya menggunakan protokol yang sama, yaitu WebSocket (ws://) yang didefinisi
 Kesimpulannya, untuk memastikan koneksi berhasil, kita perlu menyamakan port pada client.rs dengan port yang digunakan server.rs, yaitu 8080. Setelah perubahan ini dilakukan dan kode dijalankan kembali, maka koneksi WebSocket seharusnya dapat berhasil terhubung tanpa masalah.
 
 ---
+
+### 2.3 Small changes, add IP and Port.
+
+Perubahan yang dilakukan pada client.rs dan server.rs bertujuan untuk menampilkan output yang lebih informatif dan sesuai dengan format yang diinginkan seperti terlihat pada dua gambar hasil eksekusi (client dan server). Perubahan ini bersifat kecil namun sangat penting untuk memperjelas konteks pesan yang diterima maupun dikirim.
+
+Pada client.rs, bagian yang diubah adalah bagian Some(Ok(msg)) => { ... } di mana sebelumnya kemungkinan hanya mencetak pesan secara langsung, kini diperjelas dengan mencetak pesan yang diterima dari server dalam format:
+
+![/small-changes](./images/modify-small-changes-client.jpg)Perubahan ini bertujuan untuk menambahkan identifikasi pengguna di sisi klien sehingga 
+
+saat banyak terminal dijalankan bersamaan, setiap pesan yang muncul bisa diketahui berasal dari sisi siapa. Ini sangat berguna untuk kebutuhan debugging dan simulasi multi-klien saat testing aplikasi chat.
+
+Sedangkan pada server.rs, perubahan juga terjadi di bagian Some(Ok(msg)) => { ... }. Perubahan ini menambahkan pencetakan ke terminal server untuk setiap pesan yang dikirim oleh klien, lengkap dengan alamat IP dan port dari klien tersebut. Selain itu, saat server menyiarkan pesan ke semua klien, format pesan yang dikirim menjadi:
+
+![/small-changes](./images/modify-small-changes-server.jpg)
+
+Artinya, setiap klien akan menerima pesan dengan tambahan informasi asal pesan tersebut, yaitu IP dan port pengirim. Tujuannya agar pesan yang diterima oleh klien tidak ambigu dan dapat diketahui siapa pengirimnya. Ini penting dalam aplikasi chat karena pengguna perlu tahu siapa yang mengirim pesan.
+
+Dengan perubahan-perubahan kecil ini, hasil output yang ditampilkan menjadi lebih informatif dan realistis untuk simulasi sistem broadcast-chat berbasis WebSocket, seperti yang ditampilkan dalam kedua gambar hasil eksekusi program (client dan server).
+
+Hasil dari perubahan kedua kode di atas:
+
+Pada sisi server:
+
+![/small-changes](./images/small-changes-server.jpg)
+
+Pada sisi client 1:
+
+![/small-changes](./images/small-changes-client-1.jpg)
+
+Pada sisi client 2:
+
+![/small-changes](./images/small-changes-client-2.jpg)
+
+---
